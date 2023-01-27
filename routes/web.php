@@ -38,4 +38,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboardAdmin');
+Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function () {
+    // Route halaman login admin
+    Route::get('/login', [AdminController::class, 'login'])->name('loginAdmin');
+
+    // Route Group Middleware Admin
+    Route::group(['middleware' => ['admin']], function () {
+        // Route halaman dashboard admin
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboardAdmin');
+    });
+});
