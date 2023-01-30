@@ -20,6 +20,22 @@ class AdminController extends Controller
             // echo "<pre";
             // print_r($data);
             // die;
+
+            // aturan validasi
+            $rules = [
+                'email' => 'required|email|max:255',
+                'password' => 'required'
+            ];
+
+            // pesan error validasi
+            $customeMessages = [
+                'email.required' => 'Email Tidak Boleh Kosong',
+                'email.email' => 'Email Harus Memiliki Format Email yang Benar',
+                'password.required' => 'Password Tidak Boleh Kosong',
+            ];
+
+            $this->validate($request, $rules, $customeMessages);
+
             if (Auth::guard('admin')->attempt([
                 'email' => $data['email'],
                 'password' => $data['password'],

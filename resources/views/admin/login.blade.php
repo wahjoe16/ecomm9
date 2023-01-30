@@ -31,6 +31,7 @@
                             </div>
                             <h4>Hello! let's get started</h4>
                             <h6 class="font-weight-light">Sign in to continue.</h6>
+
                             @if(Session::has('error_message'))
                             <div class="alert alert-danger alert-dismissible fade show">
                                 <strong>Error: </strong>{{ Session::get('error_message') }}
@@ -39,12 +40,24 @@
                                 </button>
                             </div>
                             @endif
+
+                            @if($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                @foreach($errors->all() as $errors)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+
                             <form class="pt-3" method="post" action="{{ route('loginAdmin') }}">@csrf
                                 <div class="form-group">
-                                    <input name="email" type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email" required>
+                                    <input name="email" type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email" required="">
                                 </div>
                                 <div class="form-group">
-                                    <input name="password" type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                                    <input name="password" type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" required="">
                                 </div>
                                 <div class="mt-3">
                                     <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Sign In</button>
