@@ -40,11 +40,13 @@ require __DIR__ . '/auth.php';
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function () {
     // Route halaman login admin
-    Route::get('/login', [AdminController::class, 'login'])->name('loginAdmin');
+    Route::match(['get', 'post'], '/login', [AdminController::class, 'login'])->name('loginAdmin');
 
     // Route Group Middleware Admin
     Route::group(['middleware' => ['admin']], function () {
         // Route halaman dashboard admin
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboardAdmin');
+        // Route untuk logout admin
+        Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
     });
 });
