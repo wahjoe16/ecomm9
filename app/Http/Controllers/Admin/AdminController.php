@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
+use Image;
 
 class AdminController extends Controller
 {
@@ -97,21 +98,42 @@ class AdminController extends Controller
 
             $rules = [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'mobile' => 'required|numeric'
+                'mobile' => 'required|numeric',
+                'image' => 'mimes:jpg,jpeg,png,gif'
             ];
 
             $customeMessages = [
                 'name.required' => 'Nama Tidak Boleh Kosong',
                 'name.regex' => 'Format Nama Salah',
                 'mobile.required' => 'Nomor Handphone Tidak Boleh Kosong',
-                'mobile.numeric' => 'Nomor Handphone Harus Angka'
+                'mobile.numeric' => 'Nomor Handphone Harus Angka',
+                'image.mimes' => 'Foto harus mempunyai format jpg, jpeg, png, gif'
             ];
 
             $this->validate($request, $rules, $customeMessages);
 
+            // upload foto admin
+            if ($request->hasFile('image')) {
+                $image_tmp = $request->file('image');
+                if ($image_tmp->isValid()) {
+                    // get extension image
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // generate nama file
+                    $imageName = rand(111, 99999) . '.' . $extension;
+                    $imagePath = 'admin/images/foto/' . $imageName;
+                    // upload image
+                    Image::make($image_tmp)->save($imagePath);
+                }
+            } elseif (!empty($data['current_admin_image'])) {
+                $imageName = $data['current_admin_image'];
+            } else {
+                $imageName = '';
+            }
+
             Admin::where('id', Auth::guard('admin')->user()->id)->update([
                 'name' => $data['name'],
-                'mobile' => $data['mobile']
+                'mobile' => $data['mobile'],
+                'image' => $imageName
             ]);
 
             return redirect()->back()->with('success_message', 'Profile admin berhasil di Update');

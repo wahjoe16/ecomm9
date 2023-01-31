@@ -37,7 +37,7 @@
                     </div>
                     @endif
 
-                    <form class="" action="{{ route('updateProfileAdmin') }}" method="post" name="updateAdminProfileForm" id="updateAdminProfileForm">@csrf
+                    <form class="" action="{{ route('updateProfileAdmin') }}" method="post" name="updateAdminProfileForm" id="updateAdminProfileForm" enctype="multipart/form-data">@csrf
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="username">Username</label>
                             <div class="col-sm-9">
@@ -60,6 +60,16 @@
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="mobile">Mobile Phone</label>
                             <div class="col-sm-9">
                                 <input type="text" name="mobile" class="form-control" id="mobile" value="{{ Auth::guard('admin')->user()->mobile }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="image">Foto</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="image" class="form-control" id="image">
+                                @if(!empty(Auth::guard('admin')->user()->image))
+                                <a target="_blank" href="{{ url('admin/images/foto/'.Auth::guard('admin')->user()->image) }}">Lihat Foto</a>
+                                <input type="hidden" name="current_admin_image" value="{{ Auth::guard('admin')->user()->image }}">
+                                @endif
                             </div>
                         </div>
                         <div class="form-group row">
