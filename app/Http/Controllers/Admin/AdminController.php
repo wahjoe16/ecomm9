@@ -90,6 +90,35 @@ class AdminController extends Controller
         }
     }
 
+    public function updateProfile(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'mobile' => 'required|numeric'
+            ];
+
+            $customeMessages = [
+                'name.required' => 'Nama Tidak Boleh Kosong',
+                'name.regex' => 'Format Nama Salah',
+                'mobile.required' => 'Nomor Handphone Tidak Boleh Kosong',
+                'mobile.numeric' => 'Nomor Handphone Harus Angka'
+            ];
+
+            $this->validate($request, $rules, $customeMessages);
+
+            Admin::where('id', Auth::guard('admin')->user()->id)->update([
+                'name' => $data['name'],
+                'mobile' => $data['mobile']
+            ]);
+
+            return redirect()->back()->with('success_message', 'Profile admin berhasil di Update');
+        }
+        return view('admin.settings.update_admin_profile');
+    }
+
     public function logout()
     {
         Auth::guard('admin')->logout();
