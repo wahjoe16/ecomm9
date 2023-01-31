@@ -77,6 +77,10 @@
                         <i class="ti-settings text-primary"></i>
                         Settings
                     </a>
+                    <a href="{{ route('updatePasswordAdmin') }}" class="dropdown-item">
+                        <i class="ti-key text-primary"></i>
+                        Update Password
+                    </a>
                     <a href="{{ route('logoutAdmin') }}" class="dropdown-item">
                         <i class="ti-power-off text-primary"></i>
                         Logout
