@@ -52,6 +52,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('/check-current-password', [AdminController::class, 'checkCurrentPassword']);
         // Route untuk update profil admin
         Route::match(['get', 'post'], 'update-admin-profile', [AdminController::class, 'updateProfile'])->name('updateProfileAdmin');
+        // update vendor detail/profil
+        Route::match(['get', 'post'], 'update-vendor-profile/{slug}', [AdminController::class, 'updateVendorProfile'])->name('updateProfileVendor');
+
         // Route untuk logout admin
         Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
     });

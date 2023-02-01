@@ -12,13 +12,13 @@ class AdminsTableSeeder extends Seeder
     {
         $adminRecords = [
             [
-                'id' => 1,
-                'name' => 'Super Admin',
-                'type' => 'superadmin',
-                'vendor_id' => 0,
-                'mobile' => '082240312828',
-                'email' => 'test@admin.com',
-                'password' => '$2a$12$QQ/N9IIL33uaZbgnM0C98emjxF/Yomz7zZW6c.vOYLLi6z30nOQjO',
+                'id' => 2,
+                'name' => 'John',
+                'type' => 'vendor',
+                'vendor_id' => 1,
+                'mobile' => '082240312829',
+                'email' => 'john@admin.com',
+                'password' => '$2a$12$VWwc8bk0V1gxD.YUZfRnVemtjGbV3ziVJMBYQrfuFLW5c7.IC/dHO',
                 'image' => '',
                 'status' => 1
             ]

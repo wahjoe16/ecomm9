@@ -96,12 +96,14 @@ class AdminController extends Controller
         if ($request->isMethod('post')) {
             $data = $request->all();
 
+            // aturan validasi
             $rules = [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'mobile' => 'required|numeric',
                 'image' => 'mimes:jpg,jpeg,png,gif'
             ];
 
+            // pesan error validasi
             $customeMessages = [
                 'name.required' => 'Nama Tidak Boleh Kosong',
                 'name.regex' => 'Format Nama Salah',
