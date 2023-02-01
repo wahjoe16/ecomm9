@@ -46,12 +46,16 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     Route::group(['middleware' => ['admin']], function () {
         // Route halaman dashboard admin
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboardAdmin');
+
         // Route untuk update password admin
         Route::match(['get', 'post'], '/update-admin-password', [AdminController::class, 'updatePassword'])->name('updatePasswordAdmin');
+
         // Route untuk cek password lama
         Route::post('/check-current-password', [AdminController::class, 'checkCurrentPassword']);
+
         // Route untuk update profil admin
         Route::match(['get', 'post'], 'update-admin-profile', [AdminController::class, 'updateProfile'])->name('updateProfileAdmin');
+
         // update vendor detail/profil
         Route::match(['get', 'post'], 'update-vendor-profile/{slug}', [AdminController::class, 'updateVendorProfile'])->name('updateProfileVendor');
 

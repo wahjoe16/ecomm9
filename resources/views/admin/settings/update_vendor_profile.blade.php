@@ -2,12 +2,14 @@
 @section('content')
 <div class="content-wrapper">
     <div class="row">
-        <h3>Update Profile</h3><br><br>
+        <h3>Setting</h3><br><br>
     </div>
+    @if ($slug == 'personal')
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <h4 class="card-title">Personal Information</h4>
                     @if(Session::has('error_message'))
                     <div class="alert alert-danger alert-dismissible fade show">
                         <strong>Error: </strong>{{ Session::get('error_message') }}
@@ -37,38 +39,62 @@
                     </div>
                     @endif
 
-                    <form class="" action="{{ route('updateProfileAdmin') }}" method="post" name="updateAdminProfileForm" id="updateAdminProfileForm" enctype="multipart/form-data">@csrf
+                    <form class="" action="{{ url('admin/update-vendor-profile/personal') }}" method="post" name="updateAdminProfileForm" id="updateAdminProfileForm" enctype="multipart/form-data">@csrf
                         <div class="form-group row">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="username">Username</label>
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="username">Vendor Name</label>
                             <div class="col-sm-9">
-                                <input type="text" name="name" class="form-control" id="username" value="{{ Auth::guard('admin')->user()->name }}">
+                                <input type="text" name="vendor_name" class="form-control" id="vendor_name" value="{{ $vendorDetails['name'] }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="address">Address</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="vendor_address" class="form-control" id="vendor_address" value="{{ $vendorDetails['address'] }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="address">City</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="vendor_city" class="form-control" id="vendor_city" value="{{ $vendorDetails['city'] }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="address">State</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="vendor_state" class="form-control" id="vendor_state" value="{{ $vendorDetails['state'] }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="address">Country</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="vendor_country" class="form-control" id="vendor_country" value="{{ $vendorDetails['country'] }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="address">Pin Code</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="vendor_pincode" class="form-control" id="vendor_pincode" value="{{ $vendorDetails['pincode'] }}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="email">E-mail</label>
                             <div class="col-sm-9">
-                                <input type="email" name="email" class="form-control" id="email" value="{{ Auth::guard('admin')->user()->email }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="email">Admin Type</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="type" class="form-control" id="type" value="{{ Auth::guard('admin')->user()->type }}">
+                                <input type="email" name="vendor_email" class="form-control" id="vendor_email" value="{{ $vendorDetails['email'] }}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="mobile">Mobile Phone</label>
                             <div class="col-sm-9">
-                                <input type="text" name="mobile" class="form-control" id="mobile" value="{{ Auth::guard('admin')->user()->mobile }}">
+                                <input type="text" name="vendor_mobile" class="form-control" id="vendor_mobile" value="{{ $vendorDetails['mobile'] }}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="image">Foto</label>
                             <div class="col-sm-9">
-                                <input type="file" name="image" class="form-control" id="image">
+                                <input type="file" name="vendor_image" class="form-control" id="vendor_image">
                                 @if(!empty(Auth::guard('admin')->user()->image))
                                 <a target="_blank" href="{{ url('admin/images/foto/'.Auth::guard('admin')->user()->image) }}">Lihat Foto</a>
-                                <input type="hidden" name="current_admin_image" value="{{ Auth::guard('admin')->user()->image }}">
+                                <input type="hidden" name="current_vendor_image" value="{{ Auth::guard('admin')->user()->image }}">
                                 @endif
                             </div>
                         </div>
@@ -86,6 +112,12 @@
             </div>
         </div>
     </div>
+    @elseif ($slug == 'business')
+
+    @elseif ($slug == 'bank')
+
+    @endif
+
 </div>
 
 @endsection

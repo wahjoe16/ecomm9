@@ -68,6 +68,35 @@
                     </a>
                 </div>
             </li>
+            @if (Auth::guard('admin')->user()->type=="vendor")
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                    <img src="{{ url('admin/images/faces/face28.jpg') }}" alt="profile" />
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                    <a href="{{ url('admin/update-vendor-profile/personal') }}" class="dropdown-item">
+                        <i class="ti-settings text-primary"></i>
+                        Personal Detail
+                    </a>
+                    <a href="{{ url('admin/update-vendor-profile/business') }}" class="dropdown-item">
+                        <i class="ti-settings text-primary"></i>
+                        Business Detail
+                    </a>
+                    <a href="{{ url('admin/update-vendor-profile/bank') }}" class="dropdown-item">
+                        <i class="ti-settings text-primary"></i>
+                        Bank Detail
+                    </a>
+                    <a href="{{ route('updatePasswordAdmin') }}" class="dropdown-item">
+                        <i class="ti-key text-primary"></i>
+                        Update Password
+                    </a>
+                    <a href="{{ route('logoutAdmin') }}" class="dropdown-item">
+                        <i class="ti-power-off text-primary"></i>
+                        Logout
+                    </a>
+                </div>
+            </li>
+            @else
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                     <img src="images/faces/face28.jpg" alt="profile" />
@@ -87,6 +116,7 @@
                     </a>
                 </div>
             </li>
+            @endif
             <li class="nav-item nav-settings d-none d-lg-flex">
                 <a class="nav-link" href="#">
                     <i class="icon-ellipsis"></i>
