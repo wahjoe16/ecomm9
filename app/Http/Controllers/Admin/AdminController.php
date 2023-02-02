@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use App\Models\Vendor;
+use App\Models\VendorsBusinessDetail;
+use App\Models\VendorsBankDetail;
 use Illuminate\Support\Facades\Hash;
 use Image;
 
@@ -105,7 +107,7 @@ class AdminController extends Controller
             ];
 
             // pesan error validasi
-            $customeMessages = [
+            $customMessages = [
                 'name.required' => 'Nama Tidak Boleh Kosong',
                 'name.regex' => 'Format Nama Salah',
                 'mobile.required' => 'Nomor Handphone Tidak Boleh Kosong',
@@ -113,7 +115,7 @@ class AdminController extends Controller
                 'image.mimes' => 'Foto harus mempunyai format jpg, jpeg, png, gif'
             ];
 
-            $this->validate($request, $rules, $customeMessages);
+            $this->validate($request, $rules, $customMessages);
 
             // upload foto admin
             if ($request->hasFile('image')) {
@@ -165,7 +167,7 @@ class AdminController extends Controller
                     'vendor_pincode' => 'required|numeric'
                 ];
 
-                $customeMessages = [
+                $customMessages = [
                     'vendor_name.required' => 'Nama Tidak Boleh Kosong',
                     'vendor_name.regex' => 'Format Nama Salah',
                     'vendor_mobile.required' => 'Nomor Handphone Tidak Boleh Kosong',
@@ -183,7 +185,7 @@ class AdminController extends Controller
                     'vendor_email.email' => 'Format Email Salah'
                 ];
 
-                $this->validate($request, $rules, $customeMessages);
+                $this->validate($request, $rules, $customMessages);
 
                 // upload foto vendor
                 if ($request->hasFile('vendor_image')) {
@@ -225,9 +227,126 @@ class AdminController extends Controller
                 return redirect()->back()->with('success_message', 'Data vendor berhasil di update!');
             }
         } elseif ($slug == "business") {
-            # code...
+
+            $vendorDetails = VendorsBusinessDetail::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+
+            if ($request->isMethod('post')) {
+
+                $data = $request->all();
+
+                $rules = [
+                    'shop_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'shop_mobile' => 'required|numeric',
+                    'address_proof_image' => 'mimes:jpg,jpeg,png,gif',
+                    'shop_email' => 'required|email:rfc,dns',
+                    'shop_city' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'shop_state' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'shop_country' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'shop_pincode' => 'required|numeric',
+                    'business_license_number' => 'required|numeric',
+                    'gst_number' => 'required|numeric',
+                    'pan_number' => 'required|numeric',
+                ];
+
+                $customMessages = [
+                    'shop_name.required' => 'Nama Tidak Boleh Kosong',
+                    'shop_name.regex' => 'Format Nama Salah',
+                    'shop_mobile.required' => 'Nomor Handphone Tidak Boleh Kosong',
+                    'shop_mobile.numeric' => 'Nomor Handphone Harus Angka',
+                    'address_proof_image.mimes' => 'Foto harus mempunyai format jpg, jpeg, png, gif',
+                    'shop_city.required' => 'Nama Kota Tidak Boleh Kosong',
+                    'shop_city.regex' => 'Format Nama Kota Salah',
+                    'shop_state.required' => 'Nama Daerah Tidak Boleh Kosong',
+                    'shop_state.regex' => 'Format Nama Daerah Salah',
+                    'shop_country.required' => 'Nama Negara Tidak Boleh Kosong',
+                    'shop_country.regex' => 'Format Nama Negara Salah',
+                    'shop_pincode.required' => 'Nomor Kode Pin Tidak Boleh Kosong',
+                    'shop_pincode.numeric' => 'Nomor Kode Pin Harus Angka',
+                    'shop_email.required' => 'Email Tidak Boleh Kosong',
+                    'shop_email.email' => 'Format Email Salah',
+                    'business_license_number.required' => 'Nomor Lisensi Bisnis Tidak Bolah Kosong',
+                    'business_license_number.numeric' => 'Nomor Lisensi Bisnis Harus Angka',
+                    'gst_number.required' => 'Nomor GST Tidak Bolah Kosong',
+                    'gst_number.numeric' => 'Nomor GST Harus Angka',
+                    'pan_number.required' => 'Nomor PAN Tidak Bolah Kosong',
+                    'pan_number.numeric' => 'Nomor PAN Harus Angka'
+                ];
+
+                $this->validate($request, $rules, $customMessages);
+
+                // upload foto vendor
+                if ($request->hasFile('address_proof_image')) {
+                    $image_tmp = $request->file('address_proof_image');
+                    if ($image_tmp->isValid()) {
+                        $extension = $image_tmp->getClientOriginalExtension();
+                        $imageName = rand(111, 9999) . '.' . $extension;
+                        $image_path = 'admin/images/proofs/' . $imageName;
+
+                        Image::make($image_tmp)->save($image_path);
+                    }
+                } elseif (!empty($data['current_vendor_address_proof_image'])) {
+                    $imageName = $data['current_vendor_address_proof_image'];
+                } else {
+                    $imageName = "";
+                }
+
+                // update data ke database table vendor business detail
+                VendorsBusinessDetail::where('id', Auth::guard('admin')->user()->vendor_id)->update([
+                    'shop_name' => $data['shop_name'],
+                    'shop_address' => $data['shop_address'],
+                    'shop_city' => $data['shop_city'],
+                    'shop_state' => $data['shop_state'],
+                    'shop_country' => $data['shop_country'],
+                    'shop_pincode' => $data['shop_pincode'],
+                    'shop_mobile' => $data['shop_mobile'],
+                    'shop_email' => $data['shop_email'],
+                    'shop_website' => $data['shop_website'],
+                    'address_proof' => $data['address_proof'],
+                    'address_proof_image' => $imageName,
+                    'business_license_number' => $data['business_license_number'],
+                    'gst_number' => $data['gst_number'],
+                    'pan_number' => $data['pan_number'],
+                ]);
+
+                // dd($data);
+
+                return redirect()->back()->with('success_message', 'Data vendor berhasil di update!');
+            }
         } elseif ($slug == "bank") {
-            # code...
+
+            $vendorDetails = VendorsBankDetail::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+
+            if ($request->isMethod('post')) {
+                $data = $request->all();
+
+                $rules = [
+                    'account_holder_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'bank_name' => 'required',
+                    'account_number' => 'required|numeric',
+                    'bank_ifsc_code' => 'required|numeric'
+                ];
+
+                $customMessages = [
+                    'account_holder_name.required' => 'Nama Akun Tidak Boleh Kosong',
+                    'account_holder_name.regex' => 'Format Nama Akun Salah',
+                    'bank_name.required' => 'Nama Bank Tidak Boleh Kosong',
+                    'account_number.required' => 'Nomor Akun Tidak Boleh Kosong',
+                    'account_number.numeric' => 'Nomor Akun Harus Angka',
+                    'bank_ifsc_code.required' => 'Kode Bank Tidak Boleh Kosong',
+                    'bank_ifsc_code.numeric' => 'Kode Bank Harus Angka'
+                ];
+
+                $this->validate($request, $rules, $customMessages);
+
+                VendorsBankDetail::where('id', Auth::guard('admin')->user()->vendor_id)->update([
+                    'account_holder_name' => $data['account_holder_name'],
+                    'bank_name' => $data['bank_name'],
+                    'account_number' => $data['account_number'],
+                    'bank_ifsc_code' => $data['bank_ifsc_code']
+                ]);
+
+                return redirect()->back()->with('success_message', 'Data Vendor Bank Berhasil di Update');
+            }
         }
 
         return view('admin.settings.update_vendor_profile')->with(compact('slug', 'vendorDetails'));
