@@ -59,6 +59,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // update vendor detail/profil
         Route::match(['get', 'post'], 'update-vendor-profile/{slug}', [AdminController::class, 'updateVendorProfile'])->name('updateProfileVendor');
 
+        // Route untuk view admin, sub admin, vendors
+        Route::get('admins/{type?}', [AdminController::class, 'admins'])->name('manageAdmin');
+
         // Route untuk logout admin
         Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
     });

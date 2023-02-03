@@ -352,6 +352,20 @@ class AdminController extends Controller
         return view('admin.settings.update_vendor_profile')->with(compact('slug', 'vendorDetails'));
     }
 
+    public function admins($type = null)
+    {
+        $admins = Admin::query();
+        if (!empty($type)) {
+            $admins = $admins->where('type', $type);
+            $title = ucfirst($type);
+        } else {
+            $title = "All Admins, SubAdmins, Vendors";
+        }
+        $admins = $admins->get()->toArray();
+
+        return view('admin.admins.admins', compact('admins', 'title'));
+    }
+
     public function logout()
     {
         Auth::guard('admin')->logout();
