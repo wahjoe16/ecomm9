@@ -34,12 +34,16 @@
                                     <td class="py-1"><img src="{{ asset('admin/images/foto/'.$admin['image']) }}"></td>
                                     <td>
                                         @if ($admin['status']==1)
-                                        Active
+                                        <a href="javascript:void(0)" class="updateAdminStatus" id="admin-{{ $admin['id'] }}" admin_id="{{ $admin['id'] }}"><i class="mdi mdi-bookmark-check" style="font-size:25px" status="Active"></i></a>
                                         @else
-                                        Inactve
+                                        <a href="javascript:void(0)" class="updateAdminStatus" id="admin-{{ $admin['id'] }}" admin_id="{{ $admin['id'] }}"><i class="mdi mdi-bookmark-outline" style="font-size:25px" status="Inactive"></i></a>
                                         @endif
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        @if ($admin['type'] == "vendor")
+                                        <a href="{{ route('viewVendor', $admin['id']) }}"><i class="mdi mdi-account-search" style="font-size: 25px;"></i></a>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

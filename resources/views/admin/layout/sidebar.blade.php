@@ -15,10 +15,10 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/admin') }}">Admins</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/subadmin') }}">Sub Admins</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/vendor') }}">Vendors</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/') }}">All</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('manageAdmin', 'admin') }}">Admins</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('manageAdmin', 'subadmin') }}">Sub Admins</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('manageAdmin', 'vendor') }}">Vendors</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('manageAdmin', '') }}">All</a></li>
                 </ul>
             </div>
         </li>

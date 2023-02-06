@@ -62,6 +62,12 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Route untuk view admin, sub admin, vendors
         Route::get('admins/{type?}', [AdminController::class, 'admins'])->name('manageAdmin');
 
+        // route untuk view detail vendor
+        Route::get('/view-vendor-details/{id}', [AdminController::class, 'viewVendor'])->name('viewVendor');
+
+        // route untuk update admin status
+        Route::post('update-admin-status', [AdminController::class, 'updateAdminStatus'])->name('updateAdminStatus');
+
         // Route untuk logout admin
         Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
     });

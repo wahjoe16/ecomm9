@@ -74,15 +74,15 @@
                     <img src="{{ url('admin/images/faces/face28.jpg') }}" alt="profile" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a href="{{ url('admin/update-vendor-profile/personal') }}" class="dropdown-item">
+                    <a href="{{ route('updateProfileVendor', 'personal') }}" class="dropdown-item">
                         <i class="ti-settings text-primary"></i>
                         Personal Detail
                     </a>
-                    <a href="{{ url('admin/update-vendor-profile/business') }}" class="dropdown-item">
+                    <a href="{{ route('updateProfileVendor', 'business') }}" class="dropdown-item">
                         <i class="ti-settings text-primary"></i>
                         Business Detail
                     </a>
-                    <a href="{{ url('admin/update-vendor-profile/bank') }}" class="dropdown-item">
+                    <a href="{{ route('updateProfileVendor', 'bank') }}" class="dropdown-item">
                         <i class="ti-settings text-primary"></i>
                         Bank Detail
                     </a>
