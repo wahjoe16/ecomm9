@@ -11,8 +11,8 @@ use App\Models\Vendor;
 use App\Models\VendorsBusinessDetail;
 use App\Models\VendorsBankDetail;
 use Illuminate\Support\Facades\Hash;
-use Image;
-use Session;
+use Intervention\Image\Image;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -70,5 +71,17 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Route untuk logout admin
         Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
+
+        // Route untuk section management
+        Route::get('sections', [SectionController::class, 'sections'])->name('sections');
+
+        // Route untuk merubah status active/inactive section
+        Route::post('update-section-status', [SectionController::class, 'updateSectionStatus'])->name('updateSectionStatus');
+
+        // Route untuk edit section
+        Route::get('edit-section', [SectionController::class, 'editSection'])->name('editSection');
+
+        // Route untuk delete section
+        Route::get('delete-section', [SectionController::class, 'deleteSection'])->name('deleteSection');
     });
 });

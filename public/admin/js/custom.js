@@ -1,4 +1,11 @@
 $(document).ready(function(){
+
+    // memanggil class datatables
+    $("#sections").DataTable();
+    
+    $(".nav-item").removeClass("active");
+    $(".nav-link").removeClass("active");
+
     // mengecek password lama apakah sesuai atau tidak
     $("#current_password").keyup(function(){
         var current_password = $("#current_password").val();
@@ -41,6 +48,32 @@ $(document).ready(function(){
                     $("#admin-"+admin_id).html("<i class='mdi mdi-bookmark-outline' style='font-size:25px' status='Inactive'></i>");
                 }else if (resp['status']==1) {
                     $("#admin-"+admin_id).html("<i class='mdi mdi-bookmark-check' style='font-size:25px' status='Active'></i>");
+                }
+            }, error: function(){
+                alert("Error");
+            }
+        })
+    });
+
+    // update Section Status
+    $(document).on("click", ".updateSectionStatus", function(){
+        // alert("test");
+        var status = $(this).children("i").attr("status");
+        var section_id = $(this).attr("section_id");
+        // alert(status);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-section-status",
+            data: {status:status, section_id:section_id},
+            success: function(resp){
+                // alert(resp);
+                if (resp['status']==0) {
+                    $("#section-"+section_id).html("<i class='mdi mdi-bookmark-outline' style='font-size:25px' status='Inactive'></i>");
+                }else if (resp['status']==1) {
+                    $("#section-"+section_id).html("<i class='mdi mdi-bookmark-check' style='font-size:25px' status='Active'></i>");
                 }
             }, error: function(){
                 alert("Error");
