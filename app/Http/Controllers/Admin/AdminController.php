@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use App\Models\Country;
 use App\Models\Vendor;
 use App\Models\VendorsBusinessDetail;
 use App\Models\VendorsBankDetail;
 use Illuminate\Support\Facades\Hash;
 use Image;
+use Session;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
+        Session::put('page', 'dashboard');
         return view('admin.dashboard');
     }
 
@@ -150,6 +153,7 @@ class AdminController extends Controller
     {
         if ($slug == "personal") {
 
+            Session::put('page', 'update_personal_profile');
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
 
             if ($request->isMethod('post')) {
@@ -228,6 +232,7 @@ class AdminController extends Controller
             }
         } elseif ($slug == "business") {
 
+            Session::put('page', 'update_business_profile');
             $vendorDetails = VendorsBusinessDetail::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
 
             if ($request->isMethod('post')) {
@@ -314,6 +319,7 @@ class AdminController extends Controller
             }
         } elseif ($slug == "bank") {
 
+            Session::put('page', 'update_bank_profile');
             $vendorDetails = VendorsBankDetail::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
 
             if ($request->isMethod('post')) {
@@ -349,7 +355,8 @@ class AdminController extends Controller
             }
         }
 
-        return view('admin.settings.update_vendor_profile')->with(compact('slug', 'vendorDetails'));
+        $countries = Country::where('status', 1)->get();
+        return view('admin.settings.update_vendor_profile')->with(compact('slug', 'vendorDetails', 'countries'));
     }
 
     public function admins($type = null)
@@ -358,8 +365,10 @@ class AdminController extends Controller
         if (!empty($type)) {
             $admins = $admins->where('type', $type);
             $title = ucfirst($type);
+            Session::put('page', 'view_' . strtolower($title));
         } else {
             $title = "All Admins, SubAdmins, Vendors";
+            Session::put('page', 'view_all');
         }
         $admins = $admins->get()->toArray();
 

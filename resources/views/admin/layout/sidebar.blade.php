@@ -1,34 +1,34 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('dashboardAdmin') }}">
+            <a @if (Session::get('page')=="dashboard" ) style="background: #4B49AC !important; color:white !important" @endif class="nav-link" href="{{ route('dashboardAdmin') }}">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
         @if (Auth::guard('admin')->user()->type == 'admin')
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <li class="nav-item" @if(Session::get('page')=="view_admin" || Session::get('page')=="view_subadmin" || Session::get('page')=="view_vendor" || Session::get('page')=="view_all" ) style="background: #4B49AC !importand; color:#fff !important;" @endif>
+            <a class="nav-link" data-toggle="collapse" href="#ui-admin" aria-expanded="false" aria-controls="ui-admin">
                 <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">Admin Management</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('manageAdmin', 'admin') }}">Admins</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('manageAdmin', 'subadmin') }}">Sub Admins</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('manageAdmin', 'vendor') }}">Vendors</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('manageAdmin', '') }}">All</a></li>
+            <div class="collapse" id="ui-admin">
+                <ul class="nav flex-column sub-menu" style="background:#fff !important; color:#4B49AC !important;">
+                    <li class="nav-item"> <a @if(Session::get('page')=="view_admin" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('manageAdmin', 'admin') }}">Admins</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="view_subadmin" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('manageAdmin', 'subadmin') }}">Sub Admins</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="view_vendor" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('manageAdmin', 'vendor') }}">Vendors</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="view_all" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('manageAdmin', '') }}">All</a></li>
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse" href="#ui-user" aria-expanded="false" aria-controls="ui-user">
                 <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">User Management</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div class="collapse" id="ui-user">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="">Users</a></li>
                     <li class="nav-item"> <a class="nav-link" href="">Subscribers</a></li>

@@ -74,15 +74,15 @@
                     <img src="{{ url('admin/images/faces/face28.jpg') }}" alt="profile" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a href="{{ route('updateProfileVendor', 'personal') }}" class="dropdown-item">
+                    <a @if(Session::get('page')=='update_personal_profile' ) style="background:#4B49AC !important; color:#fff !important;" @endif href="{{ route('updateProfileVendor', 'personal') }}" class="dropdown-item">
                         <i class="ti-settings text-primary"></i>
                         Personal Detail
                     </a>
-                    <a href="{{ route('updateProfileVendor', 'business') }}" class="dropdown-item">
+                    <a @if(Session::get('page')=='update_business_profile' ) style="background: #4B49AC !important; color:#fff !important;" @endif href="{{ route('updateProfileVendor', 'business') }}" class="dropdown-item">
                         <i class="ti-settings text-primary"></i>
                         Business Detail
                     </a>
-                    <a href="{{ route('updateProfileVendor', 'bank') }}" class="dropdown-item">
+                    <a @if(Session::get('page')=='update_bank_profile' ) style="background: #4B49AC !important; color:#fff !important;" @endif href="{{ route('updateProfileVendor', 'bank') }}" class="dropdown-item">
                         <i class="ti-settings text-primary"></i>
                         Bank Detail
                     </a>

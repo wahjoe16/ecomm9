@@ -67,10 +67,15 @@
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="address">Country</label>
                             <div class="col-sm-9">
-                                <input type="text" name="vendor_country" class="form-control" id="vendor_country" value="{{ $vendorDetails['country'] }}">
+                                <select class="form-control" name="vendor_country" id="vendor_country" style="color:#495057;">
+                                    <option value="">Pilih negara</option>
+                                    @foreach ($countries as $c)
+                                    <option value="{{ $c['country_name'] }}" @if ($c['country_name']==$vendorDetails['country']) selected @endif>{{ $c['country_name'] }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class=" form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="address">Pin Code</label>
                             <div class="col-sm-9">
                                 <input type="text" name="vendor_pincode" class="form-control" id="vendor_pincode" value="{{ $vendorDetails['pincode'] }}">
@@ -175,7 +180,12 @@
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="shop_country">Shop Country</label>
                             <div class="col-sm-9">
-                                <input type="text" name="shop_country" class="form-control" id="shop_country" value="{{ $vendorDetails['shop_country'] }}">
+                                <select class="form-control" name="shop_country" id="shop_country" style="color:#495057;">
+                                    <option value="">Pilih Negara</option>
+                                    @foreach ($countries as $c )
+                                    <option value="{{ $c['country_name'] }}" @if ($c['country_name']==$vendorDetails['shop_country']) selected @endif>{{ $c['country_name'] }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">

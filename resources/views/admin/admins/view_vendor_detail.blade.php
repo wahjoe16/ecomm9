@@ -1,6 +1,5 @@
 @extends('admin.layout.layout')
 @section('content')
-
 <div class="row">
     <div class="col-md-4">
         <div class="card">
@@ -101,10 +100,8 @@
                 </ul>
             </div>
         </div>
-
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-6">
         <div class="card">
@@ -195,11 +192,9 @@
                     <div>
                         <img src="{{ asset('admin/images/proofs/'.$vendorDetail['vendor_business']['address_proof_image']) }}" height="370px" alt="user">
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @endsection
