@@ -1,3 +1,5 @@
+// const { default: Swal } = require("sweetalert2");
+
 $(document).ready(function(){
 
     // memanggil class datatables
@@ -80,4 +82,39 @@ $(document).ready(function(){
             }
         })
     });
+
+    // confirm delete (Simple JavaScript)
+    // $(".confirm-delete").click(function(){
+    //     var title = $(this).attr("title");
+    //     if (confirm("Are you sure you want to delete this "+title+"?")) {
+    //         return true;
+    //     }else {
+    //         return false;
+    //     }
+    // })
+
+    $(".confirm-delete").click(function(){
+        var module = $(this).attr("module");
+        var module_id = $(this).attr("module_id");
+        var module_name = $(this).attr("module_name");
+        Swal.fire({
+            title: "Apakah anda yakin menghapus "+module+" "+module_name+ "?",
+            text: module+" "+module_name+" Akan terhapus permanen",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"  
+        }).then((result) =>{
+            if (result.isConfirmed) {
+            Swal.fire(
+                "Terhapus!",
+                module+" "+module_name+" sudah terhapus.",
+                "success"
+            )
+            window.location = "/admin/delete-"+module+"/"+module_id;
+            }
+        })
+    })
+
 });

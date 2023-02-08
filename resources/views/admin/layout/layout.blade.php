@@ -77,6 +77,9 @@
 
     <!-- custom admin JS -->
     <script src="{{ url('/admin/js/custom.js') }}"></script>
+
+    <!-- sweet alert 2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
