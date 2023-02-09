@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -79,9 +80,25 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('sections', [SectionController::class, 'sections'])->name('sections');
         // Route untuk merubah status active/inactive section
         Route::post('update-section-status', [SectionController::class, 'updateSectionStatus'])->name('updateSectionStatus');
-        // Route untuk edit section
-        Route::get('edit-section', [SectionController::class, 'editSection'])->name('editSection');
+        // Route untuk add - edit section
+        Route::match(['get', 'post'], 'add-edit-section/{id?}', [SectionController::class, 'addEditSection'])->name('addEditSection');
         // Route untuk delete section
         Route::get('delete-Section/{id}', [SectionController::class, 'deleteSection'])->name('deleteSection');
+
+        // CATEGORY
+        // Route untuk category management
+        Route::get('categories', [CategoryController::class, 'categories'])->name('categories');
+        // Route untuk merubah status active/inactive category
+        Route::post('update-category-status', [CategoryController::class, 'updateCategoryStatus'])->name('updateCategoryStatus');
+        // Route untuk add-edit category
+        Route::match(['get', 'post'], 'add-edit-Category/{id?}', [CategoryController::class, 'addEditCategory'])->name('addEditCategory');
+        // Route untuk delete category
+        Route::get('delete-Category/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
+        // Route untuk edit category
+
+        // PRODUCTS
+        // Route untuk product management
+        Route::get('products', [ProductController::class, 'products'])->name('products');
+        // Route untuk add - edit product
     });
 });

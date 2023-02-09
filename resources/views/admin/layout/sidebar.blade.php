@@ -44,8 +44,8 @@
             <div class="collapse" id="ui-katalog">
                 <ul class="nav flex-column sub-menu" style="background:#fff !important; color:#4B49AC !important;">
                     <li class="nav-item"> <a @if(Session::get('page')=="sections" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('sections') }}">Sections</a></li>
-                    <li class="nav-item"> <a @if(Session::get('page')=="categories" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('manageAdmin', 'subadmin') }}">Categories</a></li>
-                    <li class="nav-item"> <a @if(Session::get('page')=="products" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('manageAdmin', 'vendor') }}">Products</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="categories" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('categories') }}">Categories</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="products" ) style="background:#4B49AC !important; color:#fff !important;" @else style="background:#fff !important; color:#4B49AC !important;" @endif class="nav-link" href="{{ route('products') }}">Products</a></li>
                 </ul>
             </div>
         </li>

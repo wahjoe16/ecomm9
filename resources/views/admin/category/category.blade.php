@@ -5,8 +5,10 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Sections</h4>
-                    <a href="{{ route('addEditSection') }}" class="btn btn-success btn-block" style="max-width: 150px; float: right; display:inline-block;">add Section</a>
+                    <h4 class="card-title">Categories</h4>
+                    <a href="{{ route('addEditCategory') }}" class="btn btn-success btn-block" style="max-width: 150px; float: right; display:inline-block;">
+                        add Category
+                    </a>
                     @if(Session::has('error_message'))
                     <div class="alert alert-danger alert-dismissible fade show">
                         <strong>Error: </strong>{{ Session::get('error_message') }}
@@ -25,39 +27,50 @@
                     </div>
                     @endif
                     <div class="table-responsive pt-3">
-                        <table id="sections" class="table table-striped">
+                        <table id="category" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name Section</th>
+                                    <th>Name Category</th>
+                                    <th>Section</th>
+                                    <th>Parent Category</th>
+                                    <th>Url</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($section as $s )
+                                @foreach ($category as $c )
+                                @if (isset($c['parentcategory']['category_name']) && !empty($c['parentcategory']['category_name']))
+                                @php $parent_category = $c['parentcategory']['category_name']; @endphp
+                                @else
+                                @php $parent_category = "Root"; @endphp
+                                @endif
                                 <tr>
-                                    <td>{{ $s['id'] }}</td>
-                                    <td>{{ $s['name'] }}</td>
+                                    <td>{{ $c['id'] }}</td>
+                                    <td>{{ $c['category_name'] }}</td>
+                                    <td>{{ $c['section']['name'] }}</td>
+                                    <td>{{ $parent_category }}</td>
+                                    <td>{{ $c['url'] }}</td>
                                     <td>
-                                        @if ($s['status']==1)
-                                        <a href="javascript:void(0)" class="updateSectionStatus" id="section-{{ $s['id'] }}" section_id="{{ $s['id'] }}">
+                                        @if ($c['status']==1)
+                                        <a href="javascript:void(0)" class="updateCategoryStatus" id="category-{{ $c['id'] }}" category_id="{{ $c['id'] }}">
                                             <i class="mdi mdi-bookmark-check" style="font-size:25px" status="Active"></i>
                                         </a>
                                         @else
-                                        <a href="javascript:void(0)" class="updateSectionStatus" id="section-{{ $s['id'] }}" section_id="{{ $s['id'] }}">
+                                        <a href="javascript:void(0)" class="updateCategoryStatus" id="category-{{ $c['id'] }}" category_id="{{ $c['id'] }}">
                                             <i class="mdi mdi-bookmark-outline" style="font-size:25px" status="Inactive"></i>
                                         </a>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('addEditSection', $s['id']) }}">
+                                        <a href="{{ route('addEditCategory', $c['id']) }}">
                                             <i class="mdi mdi-pencil-box" style="font-size: 25px;"></i>
                                         </a>
-                                        <!-- <a href="{{ route('deleteSection', $s['id']) }}" class="confirm-delete" title="Section">
+                                        <!-- <a href="{{ route('deleteCategory', $c['id']) }}" class="confirm-delete" title="Category">
                                             <i class="mdi mdi-delete" style="font-size: 25px;"></i>
                                         </a> -->
-                                        <a href="javascript:void(0)" class="confirm-delete" module="Section" module_id="{{ $s['id'] }}" module_name="{{ $s['name'] }}">
+                                        <a href="javascript:void(0)" class="confirm-delete" module="Category" module_id="{{ $c['id'] }}" module_name="{{ $c['category_name'] }}">
                                             <i class="mdi mdi-delete" style="font-size: 25px;"></i>
                                         </a>
                                     </td>

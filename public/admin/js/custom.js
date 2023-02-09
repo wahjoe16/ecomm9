@@ -4,6 +4,7 @@ $(document).ready(function(){
 
     // memanggil class datatables
     $("#sections").DataTable();
+    $("#category").DataTable();
     
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
@@ -76,6 +77,32 @@ $(document).ready(function(){
                     $("#section-"+section_id).html("<i class='mdi mdi-bookmark-outline' style='font-size:25px' status='Inactive'></i>");
                 }else if (resp['status']==1) {
                     $("#section-"+section_id).html("<i class='mdi mdi-bookmark-check' style='font-size:25px' status='Active'></i>");
+                }
+            }, error: function(){
+                alert("Error");
+            }
+        })
+    });
+
+    // update Category Status
+    $(document).on("click", ".updateCategoryStatus", function(){
+        // alert("test");
+        var status = $(this).children("i").attr("status");
+        var category_id = $(this).attr("category_id");
+        // alert(status);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-category-status",
+            data: {status:status, category_id:category_id},
+            success: function(resp){
+                // alert(resp);
+                if (resp['status']==0) {
+                    $("#category-"+category_id).html("<i class='mdi mdi-bookmark-outline' style='font-size:25px' status='Inactive'></i>");
+                }else if (resp['status']==1) {
+                    $("#category-"+category_id).html("<i class='mdi mdi-bookmark-check' style='font-size:25px' status='Active'></i>");
                 }
             }, error: function(){
                 alert("Error");
