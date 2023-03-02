@@ -91,11 +91,14 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Route untuk merubah status active/inactive category
         Route::post('update-category-status', [CategoryController::class, 'updateCategoryStatus'])->name('updateCategoryStatus');
         // Route untuk add-edit category
-        Route::match(['get', 'post'], 'add-edit-Category/{id?}', [CategoryController::class, 'addEditCategory'])->name('addEditCategory');
-        // Route untuk delete category
-        Route::get('delete-Category/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
+        Route::match(['get', 'post'], 'add-edit-category/{id?}', [CategoryController::class, 'addEditCategory'])->name('addEditCategory');
         // Route untuk append kategor level (subcategory)
         Route::get('append-categories-level', [CategoryController::class, 'appendCategoryLevel'])->name('appendCategoryLevel');
+        // Route untuk delete category
+        Route::get('delete-category/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
+        // Route untuk hapus gambar kategori (subcategory)
+        Route::get('delete-category-image/{id}', [CategoryController::class, 'deleteCategoryImage'])->name('deleteCategoryImage');
+
 
         // PRODUCTS
         // Route untuk product management

@@ -61,7 +61,8 @@
                             <div class="col-sm-9">
                                 <input type="file" name="category_image" class="form-control" id="category_image">
                                 @if(!empty($category->category_image))
-                                <a target="_blank" href="{{ url('/admin/images/categories/'. $category->category_image) }}">Lihat Gambar</a>
+                                <a target="_blank" href="{{ url('/admin/images/categories/'. $category->category_image) }}">Lihat Gambar</a>&nbsp;|&nbsp;
+                                <a href="javascript:void(0)" class="confirm-delete" module="category-image" module_id="{{ $category['id'] }}" module_name=" {{ $category['category_name'] }}">Hapus Gambar</a>
                                 <input type="hidden" name="current_category_image" id="current_category_image" value="{{ $category->category_image }}">
                                 @endif
                             </div>

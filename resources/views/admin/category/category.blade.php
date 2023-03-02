@@ -70,7 +70,7 @@
                                         <!-- <a href="{{ route('deleteCategory', $c['id']) }}" class="confirm-delete" title="Category">
                                             <i class="mdi mdi-delete" style="font-size: 25px;"></i>
                                         </a> -->
-                                        <a href="javascript:void(0)" class="confirm-delete" module="Category" module_id="{{ $c['id'] }}" module_name="{{ $c['category_name'] }}">
+                                        <a href="javascript:void(0)" class="confirm-delete" module="category" module_id="{{ $c['id'] }}" module_name="{{ $c['category_name'] }}">
                                             <i class="mdi mdi-delete" style="font-size: 25px;"></i>
                                         </a>
                                     </td>
