@@ -94,7 +94,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get', 'post'], 'add-edit-Category/{id?}', [CategoryController::class, 'addEditCategory'])->name('addEditCategory');
         // Route untuk delete category
         Route::get('delete-Category/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
-        // Route untuk edit category
+        // Route untuk append kategor level (subcategory)
+        Route::get('append-categories-level', [CategoryController::class, 'appendCategoryLevel'])->name('appendCategoryLevel');
 
         // PRODUCTS
         // Route untuk product management

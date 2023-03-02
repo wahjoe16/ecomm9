@@ -31,9 +31,9 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name Category</th>
-                                    <th>Section</th>
+                                    <th>Category</th>
                                     <th>Parent Category</th>
+                                    <th>Section</th>
                                     <th>Url</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -49,8 +49,8 @@
                                 <tr>
                                     <td>{{ $c['id'] }}</td>
                                     <td>{{ $c['category_name'] }}</td>
-                                    <td>{{ $c['section']['name'] }}</td>
                                     <td>{{ $parent_category }}</td>
+                                    <td>{{ $c['section']['name'] }}</td>
                                     <td>{{ $c['url'] }}</td>
                                     <td>
                                         @if ($c['status']==1)

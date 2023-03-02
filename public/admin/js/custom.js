@@ -120,6 +120,7 @@ $(document).ready(function(){
     //     }
     // })
 
+    // Konfirmasi Delete
     $(".confirm-delete").click(function(){
         var module = $(this).attr("module");
         var module_id = $(this).attr("module_id");
@@ -143,5 +144,25 @@ $(document).ready(function(){
             }
         })
     })
+
+    // proses append kategori level(subcategory)
+    $("#section_id").change(function(){
+        var section_id = $(this).val();
+        // alert(section_name);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "get",
+            url: '/admin/append-categories-level',
+            data: {section_id:section_id},
+            success:function(resp){
+                // alert(resp);
+                $("#appendCategoriesLevel").html(resp);
+            },error:function(){
+                alert("An error occurred");
+            }   
+        })
+    });
 
 });
