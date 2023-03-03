@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\ProfileController;
@@ -98,6 +99,15 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('delete-category/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
         // Route untuk hapus gambar kategori (subcategory)
         Route::get('delete-category-image/{id}', [CategoryController::class, 'deleteCategoryImage'])->name('deleteCategoryImage');
+
+        // Brands
+        Route::get('brands', [BrandController::class, 'brands'])->name('brands');
+        // Route untuk merubah status active/inactive section
+        Route::post('update-brand-status', [BrandController::class, 'updateBrandStatus'])->name('updateBrandStatus');
+        // Route untuk add - edit section
+        Route::match(['get', 'post'], 'add-edit-brand/{id?}', [BrandController::class, 'addEditBrand'])->name('addEditBrand');
+        // Route untuk delete section
+        Route::get('delete-brand/{id}', [BrandController::class, 'deleteBrand'])->name('deleteBrand');
 
 
         // PRODUCTS

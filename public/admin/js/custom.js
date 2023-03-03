@@ -84,6 +84,32 @@ $(document).ready(function(){
         })
     });
 
+    // update Brand Status
+    $(document).on("click", ".updateBrandStatus", function(){
+        // alert("test");
+        var status = $(this).children("i").attr("status");
+        var brand_id = $(this).attr("brand_id");
+        // alert(status);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-brand-status",
+            data: {status:status, brand_id:brand_id},
+            success: function(resp){
+                // alert(resp);
+                if (resp['status']==0) {
+                    $("#brand-"+brand_id).html("<i class='mdi mdi-bookmark-outline' style='font-size:25px' status='Inactive'></i>");
+                }else if (resp['status']==1) {
+                    $("#brand-"+brand_id).html("<i class='mdi mdi-bookmark-check' style='font-size:25px' status='Active'></i>");
+                }
+            }, error: function(){
+                alert("Error");
+            }
+        })
+    });
+
     // update Category Status
     $(document).on("click", ".updateCategoryStatus", function(){
         // alert("test");
