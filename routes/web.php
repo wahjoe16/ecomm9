@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -110,9 +111,13 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('delete-brand/{id}', [BrandController::class, 'deleteBrand'])->name('deleteBrand');
 
 
-        // PRODUCTS
-        // Route untuk product management
+        // Products
         Route::get('products', [ProductController::class, 'products'])->name('products');
-        // Route untuk add - edit product
+        // Route untuk merubah status active/inactive Product
+        Route::post('update-product-status', [ProductController::class, 'updateProductStatus'])->name('updateProductStatus');
+        // Route untuk add - edit Product
+        Route::match(['get', 'post'], 'add-edit-product/{id?}', [ProductController::class, 'addEditProduct'])->name('addEditProduct');
+        // Route untuk delete Product
+        Route::get('delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
     });
 });

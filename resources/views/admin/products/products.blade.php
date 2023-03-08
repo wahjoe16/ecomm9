@@ -5,8 +5,10 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Brands</h4>
-                    <a href="{{ route('addEditBrand') }}" class="btn btn-success btn-block" style="max-width: 150px; float: right; display:inline-block;">add Brand</a>
+                    <h4 class="card-title">Products</h4>
+                    <a href="{{ route('addEditProduct') }}" class="btn btn-success btn-block" style="max-width: 150px; float: right; display:inline-block;">
+                        add Products
+                    </a>
                     @if(Session::has('error_message'))
                     <div class="alert alert-danger alert-dismissible fade show">
                         <strong>Error: </strong>{{ Session::get('error_message') }}
@@ -25,39 +27,55 @@
                     </div>
                     @endif
                     <div class="table-responsive pt-3">
-                        <table id="brands" class="table table-striped">
+                        <table id="products" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Brand Name</th>
+                                    <th>Product Name</th>
+                                    <th>Product Code</th>
+                                    <th>Section</th>
+                                    <th>Category</th>
+                                    <th>Added By</th>
+                                    <th>Brand</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($brands as $b )
+                                @foreach ($products as $p)
                                 <tr>
-                                    <td>{{ $b['id'] }}</td>
-                                    <td>{{ $b['name'] }}</td>
+                                    <td>{{ $p['id'] }}</td>
+                                    <td>{{ $p['product_name'] }}</td>
+                                    <td>{{ $p['product_code'] }}</td>
+                                    <td>{{ $p['section']['name'] }}</td>
+                                    <td>{{ $p['category']['category_name'] }}</td>
                                     <td>
-                                        @if ($b['status']==1)
-                                        <a href="javascript:void(0)" class="updateBrandStatus" id="brand-{{ $b['id'] }}" brand_id="{{ $b['id'] }}">
+                                        @if($p['admin_type']=="vendor")
+                                        <a href="{{ route('viewVendor', $p['admin_id']) }}">{{ ucfirst($p['admin_type']) }}</a>
+                                        @else
+                                        {{ ucfirst($p['admin_type']) }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $p['brand']['name'] }}</td>
+                                    <td>
+                                        @if ($p['status']==1)
+                                        <a href="javascript:void(0)" class="updateProductStatus" id="product-{{ $p['id'] }}" product_id="{{ $p['id'] }}">
                                             <i class="mdi mdi-bookmark-check" style="font-size:25px" status="Active"></i>
                                         </a>
                                         @else
-                                        <a href="javascript:void(0)" class="updateBrandStatus" id="brand-{{ $b['id'] }}" brand_id="{{ $b['id'] }}">
+                                        <a href="javascript:void(0)" class="updateProductStatus" id="product-{{ $p['id'] }}" product_id="{{ $p['id'] }}">
                                             <i class="mdi mdi-bookmark-outline" style="font-size:25px" status="Inactive"></i>
                                         </a>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('addEditBrand', $b['id']) }}">
+                                        <a href="{{ route('addEditProduct', $p['id']) }}">
                                             <i class="mdi mdi-pencil-box" style="font-size: 25px;"></i>
                                         </a>
-                                        <!-- <a href="{{ route('deleteSection', $b['id']) }}" class="confirm-delete" title="Section">
+                                        <!-- <a href="{{ route('deleteCategory', $p['id']) }}" class="confirm-delete" title="Category">
                                             <i class="mdi mdi-delete" style="font-size: 25px;"></i>
                                         </a> -->
-                                        <a href="javascript:void(0)" class="confirm-delete" module="brand" module_id="{{ $b['id'] }}" module_name="{{ $b['name'] }}">
+                                        <a href="javascript:void(0)" class="confirm-delete" module="product" module_id="{{ $p['id'] }}" module_name="{{ $p['product_name'] }}">
                                             <i class="mdi mdi-delete" style="font-size: 25px;"></i>
                                         </a>
                                     </td>
