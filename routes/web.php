@@ -119,5 +119,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get', 'post'], 'add-edit-product/{id?}', [ProductController::class, 'addEditProduct'])->name('addEditProduct');
         // Route untuk delete Product
         Route::get('delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
+        // Route untuk delete image product
+        Route::get('delete-product-image/{id}', [ProductController::class, 'deleteProductImage'])->name('deleteProductImage');
+        // Route untuk delete video product
+        Route::get('delete-product-video/{id}', [ProductController::class, 'deleteProductVideo'])->name('deleteProductVideo');
     });
 });

@@ -35,6 +35,7 @@
                                     <th>Product Code</th>
                                     <th>Section</th>
                                     <th>Category</th>
+                                    <th>Image</th>
                                     <th>Added By</th>
                                     <th>Brand</th>
                                     <th>Status</th>
@@ -49,6 +50,13 @@
                                     <td>{{ $p['product_code'] }}</td>
                                     <td>{{ $p['section']['name'] }}</td>
                                     <td>{{ $p['category']['category_name'] }}</td>
+                                    <td>
+                                        @if(!empty($p['product_image']))
+                                        <img style="width: 100px; height: 100px;" src="{{ asset('front/images/product/small/'.$p['product_image']) }}" alt="">
+                                        @else
+                                        <img style="width: 100px; height: 100px;" src="{{ asset('front/images/product/small/no-image.png') }}" alt="">
+                                        @endif
+                                    </td>
                                     <td>
                                         @if($p['admin_type']=="vendor")
                                         <a href="{{ route('viewVendor', $p['admin_id']) }}">{{ ucfirst($p['admin_type']) }}</a>

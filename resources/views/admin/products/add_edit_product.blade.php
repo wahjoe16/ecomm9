@@ -39,14 +39,14 @@
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="section_id">Select Category</label>
                             <div class="col-sm-9">
-                                <select name="category_id" id="category_id" class="form-control" style="color: #000">
+                                <select name="category_id" id="category_id" class="form-control text-dark">
                                     <option value="">Select</option>
                                     @foreach($categories as $c)
                                     <optgroup label="{{ $c['name'] }}"></optgroup>
                                     @foreach ($c['categories'] as $category)
-                                    <option value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;--&nbsp;{{ $category['category_name'] }}</option>
+                                    <option @if(!empty($product['category_id']==$category['id'])) selected @endif value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;--&nbsp;{{ $category['category_name'] }}</option>
                                     @foreach ($category['subcategories'] as $subcategory)
-                                    <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name'] }}</option>
+                                    <option @if(!empty($product['category_id'])) && $product['category_id']==$subcategory['id'] selected @endif value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name'] }}</option>
                                     @endforeach
                                     @endforeach
                                     @endforeach
@@ -56,10 +56,10 @@
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="section_id">Select Brand</label>
                             <div class="col-sm-9">
-                                <select name="brand_id" id="brand_id" class="form-control" style="color: #000">
+                                <select name="brand_id" id="brand_id" class="form-control text-dark">
                                     <option value="">Select</option>
                                     @foreach($brands as $b)
-                                    <option value="{{ $b['id'] }}">{{ $b['name'] }}</option>
+                                    <option value="{{ $b['id'] }}" @if(!empty($product['brand_id'])) && $product['brand_id']==$b['id'] selected @endif>{{ $b['name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -101,22 +101,22 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="product_video">Product Image</label>
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="product_video">Product Image (Recomended Size: 1000x1000)</label>
                             <div class="col-sm-9">
                                 <input type="file" name="product_image" class="form-control" id="product_image">
                                 @if(!empty($product->product_image))
-                                <a target="_blank" href="{{ url('/admin/images/products/'. $product->product_image) }}">See Image</a>&nbsp;|&nbsp;
+                                <a target="_blank" href="{{ url('/front/images/product/large/'. $product->product_image) }}">See Image</a>&nbsp;|&nbsp;
                                 <a href="javascript:void(0)" class="confirm-delete" module="product-image" module_id="{{ $product['id'] }}" module_name=" {{ $product['product_image'] }}">Delete Image</a>
                                 <input type="hidden" name="current_product_image" id="current_product_image" value="{{ $product->product_image }}">
                                 @endif
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="product_video">Product Video</label>
+                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="product_video">Product Video (Recomended Size: Less Than 2MB)</label>
                             <div class="col-sm-9">
                                 <input type="file" name="product_video" class="form-control" id="product_video">
                                 @if(!empty($product->product_video))
-                                <a target="_blank" href="{{ url('/admin/videos/products/'. $product->product_video) }}">See Video</a>&nbsp;|&nbsp;
+                                <a target="_blank" href="{{ url('/front/videos/product/'. $product->product_video) }}">See Video</a>&nbsp;|&nbsp;
                                 <a href="javascript:void(0)" class="confirm-delete" module="product-video" module_id="{{ $product['id'] }}" module_name=" {{ $product['product_video'] }}">Delete Video</a>
                                 <input type="hidden" name="current_product_video" id="current_product_video" value="{{ $product->product_video }}">
                                 @endif
@@ -125,7 +125,7 @@
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="description">Product Description</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="description" id="description" rows="10" @if(!empty($product['description'])) value="{{ $product['description'] }}" @endif></textarea>
+                                <textarea class="form-control" name="description" id="description" rows="10" @if(!empty($product['description'])) value="{{ $product['description'] }}" @endif>{{ $product['description'] }}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">

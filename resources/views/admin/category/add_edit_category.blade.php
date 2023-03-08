@@ -76,7 +76,7 @@
                         <div class="form-group row">
                             <label for="exampleInputEmail2" class="col-sm-3 col-form-label" for="description">Deskripsi Kategori</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="description" id="description" rows="10" @if(!empty($category['description'])) value="{{ $category['description'] }}" @endif></textarea>
+                                <textarea class="form-control" name="description" id="description" rows="10" @if(!empty($category['description'])) value="{{ $category['description'] }}" @endif>{{ $category['description'] }}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">

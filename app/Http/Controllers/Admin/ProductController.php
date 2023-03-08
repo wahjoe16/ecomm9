@@ -10,6 +10,7 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -73,6 +74,45 @@ class ProductController extends Controller
 
             $this->validate($request, $rules, $customMessage);
 
+            // upload product image after resize (small: 250x250 pixels, medium: 500x500 pixels, large: 1000x1000 pixels)
+            if ($request->hasFile('product_image')) {
+                $image_tmp = $request->file('product_image');
+                if ($image_tmp->isValid()) {
+                    // get image extension
+                    $imageExt = $image_tmp->getClientOriginalExtension();
+                    // get image name and path
+                    $imageName = rand(111, 99999) . '.' . $imageExt;
+                    $imageLargePath = 'front/images/product/large/' . $imageName;
+                    $imageMediumPath = 'front/images/product/medium/' . $imageName;
+                    $imageSmallPath = 'front/images/product/small/' . $imageName;
+
+                    // upload image
+                    Image::make($image_tmp)->resize(1000, 1000)->save($imageLargePath);
+                    Image::make($image_tmp)->resize(500, 500)->save($imageMediumPath);
+                    Image::make($image_tmp)->resize(250, 250)->save($imageSmallPath);
+
+                    // save to DB
+                    $product->product_image = $imageName;
+                }
+            }
+
+            // upload product video
+            if ($request->hasFile('product_video')) {
+                $videoTmp = $request->file('product_video');
+                if ($videoTmp->isValid()) {
+                    // get video extension
+                    $videoExt = $videoTmp->getClientOriginalExtension();
+                    // get video name
+                    $vidName = $videoTmp->getClientOriginalName();
+                    $videoName = $vidName . '-' . rand() . '.' . $videoExt;
+                    $videoPath = 'front/videos/product/';
+                    $videoTmp->move($videoPath, $videoName);
+
+                    // save to database
+                    $product->product_video = $videoName;
+                }
+            }
+
             // save product details in database
             $categoryDetails = Category::find($data['category_id']);
             $product->section_id = $categoryDetails['section_id'];
@@ -126,6 +166,53 @@ class ProductController extends Controller
     {
         Products::where('id', $id)->delete();
         $message = "Data Product Berhasil Dihapus";
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function deleteProductImage($id)
+    {
+        $productImage = Products::select('product_image')->where('id', $id)->first();
+
+        // get product image path
+        $smallImagePath = 'front/images/product/small/';
+        $mediumImagePath = 'front/images/product/medium/';
+        $largeImagePath = 'front/images/product/large/';
+
+        // delete product small image if exists in small folder
+        if (file_exists($smallImagePath . $productImage->product_image)) {
+            unlink($smallImagePath . $productImage->product_image);
+        }
+
+        if (file_exists($largeImagePath . $productImage->product_image)) {
+            unlink($largeImagePath . $productImage->product_image);
+        }
+
+        if (file_exists($mediumImagePath . $productImage->product_image)) {
+            unlink($mediumImagePath . $productImage->product_image);
+        }
+
+        // delete from DB
+        Products::where('id', $id)->update(['product_image' => '']);
+
+        $message = "Product image deleted successfully";
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function deleteProductVideo($id)
+    {
+        $productVideo = Products::select('product_video')->where('id', $id)->first();
+        // get product video path
+        $videoPath = 'front/videos/product/';
+
+        // delete video if it exists in folder
+        if (file_exists($videoPath . $productVideo->product_video)) {
+            unlink($videoPath . $productVideo->product_video);
+        }
+
+        // delete from DB
+        Products::where('id', $id)->update(['product_video' => '']);
+
+        $message = "Product video deleted successfully";
         return redirect()->back()->with('success_message', $message);
     }
 }
